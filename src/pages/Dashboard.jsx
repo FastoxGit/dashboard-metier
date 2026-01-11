@@ -158,13 +158,6 @@ export default function Dashboard() {
         </div>
 
         <div className="d-flex gap-2">
-          {/* <button
-            className="btn btn-outline-dark"
-            onClick={() => window.location.reload()}
-            type="button"
-          >
-            Rafraîchir
-          </button> */}
           <div className="d-flex gap-2">
             <button
               className="btn btn-outline-dark"
