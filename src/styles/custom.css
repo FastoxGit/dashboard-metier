@@ -1,0 +1,21 @@
+:root {
+  --radius: 16px;
+}
+
+body {
+  background: #f7f7f8;
+}
+
+.card {
+  border-radius: var(--radius);
+}
+
+.table thead th {
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+  font-size: 0.9rem;
+}
