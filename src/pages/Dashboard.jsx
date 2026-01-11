@@ -127,6 +127,26 @@ export default function Dashboard() {
     setSort("updatedAt_desc");
   }
 
+  function exportCsv(rows) {
+    const headers = ["id", "customer", "carrier", "status", "eta", "origin", "destination", "items", "priority", "updatedAt"];
+    const escape = (v) => `"${String(v ?? "").replaceAll('"', '""')}"`;
+
+    const csv = [
+      headers.join(","),
+      ...rows.map((r) =>
+        headers.map((h) => escape(r[h])).join(",")
+      ),
+    ].join("\n");
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `shipments_export_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="container py-4">
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
@@ -138,13 +158,31 @@ export default function Dashboard() {
         </div>
 
         <div className="d-flex gap-2">
-          <button
+          {/* <button
             className="btn btn-outline-dark"
             onClick={() => window.location.reload()}
             type="button"
           >
             Rafraîchir
-          </button>
+          </button> */}
+          <div className="d-flex gap-2">
+            <button
+              className="btn btn-outline-dark"
+              onClick={() => exportCsv(filtered)}
+              type="button"
+              disabled={loading || !filtered.length}
+            >
+              Export CSV
+            </button>
+
+            <button
+              className="btn btn-outline-dark"
+              onClick={() => window.location.reload()}
+              type="button"
+            >
+              Rafraîchir
+            </button>
+          </div>
           <a className="btn btn-dark" href="mailto:romain@email.com">
             Contacter
           </a>
